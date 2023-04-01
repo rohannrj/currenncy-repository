@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>currency converter</title>
+    <style>
+
+h1{
+    font-family: "Sofia", sans-serif;
+}
+
+.form{
+    background: rgb(20,20,22);
+background: radial-gradient(circle, rgba(20,20,22,1) 0%, rgba(252,70,107,1) 100%);
+padding: 50px;
+border-spacing: 30px;
+border:5px solid black;
+}
+
+.body{
+    background-color:gray;
+}
+
+.button{
+    border:none;
+    padding:10px 20px;
+    cursor: pointer;
+
+}
+.button{background-color:gray;}
+.button{border-radius: 12px;}
+  
+
+
+    </style>
+    <script>
+     function convert()
+     {
+        var amtobj=document.getElementById('amtid')
+        //alert(amtobj);
+        amt=amtobj.value;
+        //alert(amt);
+        var frmobj=document.getElementById('frmid')
+        frm=frmobj.value;
+        //alert(frm);
+        var to_obj=document.getElementById('toid')
+        to=to_obj.value;
+        //alert(to);
+        //var h1obj=document.getElementById("one")
+       // alert(h1obj);
+        //x=h1obj.innerHTML;
+       // alert(x);
+       var rid=document.getElementById('result')
+       //rid.innerHTML=x;
+
+       //calculation
+      apilink="https://api.exchangerate-api.com/v4/latest/"+frm;
+      //document.write(apilink);
+      /*var res=fetch(apilink);
+      document.write(res);
+      console.log(res);*/
+       
+      fetch(apilink).then(
+
+        function(res)
+        {
+            //console.log(res.json());
+            return res.json();
+
+        }
+      ).then(
+          function(json)
+          {
+            //console.log(json);
+            //console.log(json.rates);
+              dict=json.rates;
+
+             // console.log(dict['BHD']);
+             cr=dict[to];
+             //console.log(cr);
+             res=cr*amt;
+             //alert(res);
+             rid.innerHTML=res
+          }
+
+      );     
+       
+
+
+     }
+    </script>
+
+</head>
+<body class="body">
+
+    <h1 align="center" class="text" id="one">Currency Converter</h1>
+   <table border="0" align="center" class="form" >
+    
+    
+
+        <tr>
+        <td><strong>Amount:</strong></td>
+        <td><input type="number" placeholder="Amount" name="amt" id="amtid"></td>
+    </tr>
+
+    <tr>
+        <td><strong>FORM:</strong></td>
+        <td>
+       <select name="to" id="frmid">
+        <option value="INR">India</option>
+        <option value="USD">America</option>
+        <option value="EUR">Euro</option>
+        <option value="GBP">British Pound</option>
+        <option value="JPY">Japanese</option>
+        <option value="CAD">Canadian</option>
+       </select> 
+    </td>
+    </tr>
+
+    <tr>
+        <td><strong>TO:</strong></td>
+        <td>
+       <select name="to" id="toid">
+        <option value="INR">India</option>
+        <option value="USD">America</option>
+        <option value="EUR">Euro</option>
+        <option value="GBP">British Pound</option>
+        <option value="JPY">Japanese</option>
+        <option value="CAD">Canadian</option>
+       </select> 
+    </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="center"><button class="button"  id="btn" onclick="convert()"><strong>Convert</strong></button></tr></td>
+     </tr>
+ 
+   </table>  
+   <div id="result"></div> 
+</body>
+</html>
